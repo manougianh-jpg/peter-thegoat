@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Blue Lock Striker System</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    background: black;
+    overflow-x: hidden;
+}
+
+/* MENU SCREEN */
+#menu {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#menu::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+#menu h1 {
+    font-size: 40px;
+    color: #00f0ff;
+    z-index: 2;
+    text-shadow: 0 0 20px #00f0ff;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#00f0ff,#0066ff);
+    color: white;
+    cursor: pointer;
+    z-index: 2;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+/* GAME AREA */
+#game {
+    display: none;
+    padding: 20px;
+    background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=1950&q=80') center/cover fixed;
+    min-height: 100vh;
+}
+
+.overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    opacity:0.6;
+    z-index:-1;
+}
+
+.container {
+    max-width: 750px;
+    margin: auto;
+}
+
+.question {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #00f0ff55;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+button.submit {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 20px;
+    background: linear-gradient(90deg,#00f0ff,#0066ff);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* FINAL SCREEN */
+#finalScreen {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1950&q=80') center/cover;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+#finalScreen::before {
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.75);
+}
+
+.finalText {
+    position: relative;
+    font-size: 35px;
+    color: #00f0ff;
+    text-shadow: 0 0 20px #00f0ff;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div id="menu">
+    <h1>BLUE LOCK STRIKER SYSTEM</h1>
+    <button class="btn" onclick="startGame()">START MATCH</button>
+</div>
+
+<!-- GAME -->
+<div id="game">
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="question"><p>1. Chigiri first name</p><input id="q1"></div>
+        <div class="question"><p>2. Inazuma Eleven fire sense player</p><input id="q2"></div>
+        <div class="question"><p>3. Football GOAT</p><input id="q3"></div>
+        <div class="question"><p>4. Blue Lock character with green hair</p><input id="q4"></div>
+        <div class="question"><p>5. “ta7et” in English</p><input id="q5"></div>
+        <div class="question"><p>6. A place in Lebanon starting with T</p><input id="q6"></div>
+        <div class="question">
+            <p>7. Take first letters + “I love”</p>
+            <input id="q7">
+        </div>
+
+        <button class="submit" onclick="submitQuiz()">SUBMIT</button>
+    </div>
+</div>
+
+<!-- FINAL SCREEN -->
+<div id="finalScreen">
+    <div class="finalText" id="finalText"></div>
+</div>
+
+<script>
+function startGame(){
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("game").style.display = "block";
+}
+
+function norm(v){ return v.trim().toLowerCase(); }
+
+function submitQuiz(){
+    let score = 0;
+
+    if(norm(q1.value) === "hyoma") score++;
+    if(norm(q2.value) === "axel blaze") score++;
+    if(norm(q3.value) === "ronaldo") score++;
+    if(norm(q4.value) === "otoya") score++;
+    if(norm(q5.value) === "under") score++;
+    if(norm(q6.value) === "tripoli") score++;
+    if(norm(q7.value) === "i love harout") score++;
+
+    document.getElementById("game").style.display = "none";
+    document.getElementById("finalScreen").style.display = "flex";
+
+    let msg = "";
+
+    if(score === 7){
+        msg = "🏆 MATCH WINNER: DJ PEETS";
+    } else if(score >= 4){
+        msg = "⚔️ GOOD MATCH\nSCORE: " + score + "/7";
+    } else {
+        msg = "💀 ELIMINATED\nSCORE: " + score + "/7";
+    }
+
+    finalText.innerText = msg;
+}
+</script>
+
+</body>
+</html>
